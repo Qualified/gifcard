@@ -4,6 +4,6 @@
         "silex/silex": "~1",
         "twig/twig": "~1.8",
         "symfony/twig-bridge": "~2.3",
-        "imagine/imagine": "dev-master"
+        "imagine/imagine": "~0.6"
     }
 }

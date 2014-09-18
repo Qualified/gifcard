@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b735ae1105b8413767a1006ba64e65ad",
+    "hash": "24536f428a1aa9624c15edbb9fa33324",
     "packages": [
         {
             "name": "imagine/imagine",
-            "version": "dev-master",
+            "version": "v0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/avalanche123/Imagine.git",
-                "reference": "10e9522f11a6e846061226b7e54347909a849e09"
+                "reference": "725279fd560faa1c7012a80b427b31d7f08f36ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/10e9522f11a6e846061226b7e54347909a849e09",
-                "reference": "10e9522f11a6e846061226b7e54347909a849e09",
+                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/725279fd560faa1c7012a80b427b31d7f08f36ff",
+                "reference": "725279fd560faa1c7012a80b427b31d7f08f36ff",
                 "shasum": ""
             },
             "require": {
@@ -34,7 +34,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.7-dev"
+                    "dev-develop": "0.6-dev"
                 }
             },
             "autoload": {
@@ -61,7 +61,7 @@
                 "image manipulation",
                 "image processing"
             ],
-            "time": "2014-08-26 11:26:34"
+            "time": "2014-06-16 20:53:48"
         },
         {
             "name": "pimple/pimple",
@@ -790,9 +790,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "imagine/imagine": 20
-    },
+    "stability-flags": [
+
+    ],
     "prefer-stable": false,
     "platform": {
         "php": ">=5.4"

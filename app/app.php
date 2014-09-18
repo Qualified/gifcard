@@ -3,6 +3,7 @@
 require __DIR__ . '/bootstrap.php';
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Imagine\Image\Box;
 use Imagine\Imagick\Font;
 use Imagine\Image\Point;
@@ -25,8 +26,8 @@ $app->get('/', function() use ($app) {
     return $app['twig']->render('index.twig');
 });
 
-$app->get('/gifcard', function() use ($app) {
-    set_time_limit(200);
+$app->get('/gifcard', function(Request $request) use ($app) {
+    $q = $request->query;
 
     $path = function($p) {
         return __DIR__ . '/../src/images/' . $p;
@@ -36,36 +37,21 @@ $app->get('/gifcard', function() use ($app) {
     $imageLocation = __DIR__ . '/../web/images/' . $imageName;
 
     // Configurable parameters
-    $width = 500;
-    $height = 500;
-    $text1 = 'You just got gifcarded';
-    $text1Size = 28;
-    $text2 = '$15';
-    $text2Size = 80;
+    $width = $q->get('w', 500);
+    $height = $q->get('h', 500);
+    $text1 = $q->get('t1', 'You just got gifcarded');
+    $text1Size = $q->get('ts1', 28);
+    $text2 = $q->get('t2', '$15');
+    $text2Size = $q->get('ts2', 80);
 
-    $fontColor = '000000';
-    $font = 'amble';
+    $fontColor = $q->get('fc', '000000');
+    $font = $q->get('f', 'amble');
+    $img = sprintf('%s.gif', $q->get('i', 'cat'));
 
-    $image = $app['imagine']->create(new Box($width, $height));
+    $image = $app['imagine']->open($path('osky-logo.gif'));
     $image->layers()
-        ->add($app['imagine']->open($path('osky-logo.gif')))
-        ->add($app['imagine']->open($path('pbj.gif')))
-        ->add($app['imagine']->open($path('smiling-dog.gif')))
-        //->add($app['imagine']->open($path('paddle-ball.gif')))
-        ->add($app['imagine']->open($path('cat.gif')))
-        ->add($app['imagine']->open($path('puppy.gif')))
-        ->add($app['imagine']->open($path('cat2.gif')))
-        ->add($app['imagine']->open($path('aww-snap.gif')))
-        ->add($app['imagine']->open($path('dance.gif')))
-        //->add($app['imagine']->open($path('cat-licking.gif')))
-        ->add($app['imagine']->open($path('train-wreck.gif')))
-        ->add($app['imagine']->open($path('cat-fail.gif')))
-        ->add($app['imagine']->open($path('dog.gif')))
-        ->add($app['imagine']->open($path('nyan_cat.gif')))
-        ->add($app['imagine']->open($path('rabbit.gif')))
-        ->add($app['imagine']->open($path('hiss.gif')))
-        ->add($app['imagine']->open($path('puppies.gif')))
-        ->add($app['imagine']->open($path('osky-logo.gif')))
+        //->add($app['imagine']->open($path('osky-logo.gif')))
+        ->add($app['imagine']->open($path($img)))
     ;
 
     $fontDir = __DIR__ . '/../src/fonts/';
@@ -108,17 +94,13 @@ $app->get('/gifcard', function() use ($app) {
                 ->text($text2, $font2, $point);
         }
     }
-    $image->layers()->animate('gif', 100, 0);
+    //$image->layers()->animate('gif', 100, 0);
     $image->layers()->coalesce();
 
-    $image->save($imageLocation, array(
+    return $image->show('gif', array(
         'animated' => true,
         'animated.loops' => 0,
-    ));
-
-
-    return $app['twig']->render('image.twig', array(
-        'imagePath' => 'images/' . $imageName,
+        'animated.delay' => 100,
     ));
 });
 
